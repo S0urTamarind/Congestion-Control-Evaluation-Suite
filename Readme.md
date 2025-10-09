@@ -1,37 +1,37 @@
 # Questions
-- \[SECTION 5.1] RFC 5166 \[SECTION 2.1] mentions different ways of calculating Throughput, Latency and Packet Drop Rate(Router-Based, Flow-Based, User-Based), which one is suitable for a CCA eval tool?
-- \[SECTION 5.1] RFC 5166 \[Section 2.2] mentions response time and minimum oscillations as a metric, what would be a suitable test to report these metrics on?
-- \[SECTION 5] Should number of packets dropped in a time frame be reported? (Packet drop rate is already being measured)
+- [SECTION 5.1] RFC 5166 [SECTION 2.1] mentions different ways of calculating Throughput, Latency and Packet Drop Rate (Router-Based, Flow-Based, User-Based), which one is suitable for a CCA eval tool?
+- [SECTION 5.1] RFC 5166 [SECTION 2.2] mentions response time and minimum oscillations as a metric, what would be a suitable test to report these metrics on?
+- [SECTION 5] Should number of packets dropped in a time frame be reported? (Packet drop rate is already being measured)
 - [SECTION 5: Should one end device send multiple flows? Or multiple devices send one flow each?](#short-flows)
-- [[#Fairness Within the Proposed Congestion Control Algorithm| [SECTION 5.1.4, SECTION 5.1.5, SECTION 5.2.1, SECTION 5.2.3] Should fairness be measured across flows or devices?(if a device sends multiple flows)]]
-- [[#Existing General Purpose CC Algorithms|[SECTION 5.1.4, SECTION 5.1.3, SECTION 5.2.1, SECTION 5.2.3] What metrics should be used to measure fairness between flows with the same CCA and flows with different CCA?]]
-\[Jain’s Fairness, Product Measure, Epsilon Fairness, Max-Min Fairness, Minimum potential delay fairness, HARM fairness]
-- [[#Fairness Within the Proposed Congestion Control Algorithm|[SECTION 5.1.4, SECTION 5.1.5] What is a suitable value for epsilon in epsilon fairness?]]
-- [[#Fairness Within the Proposed Congestion Control Algorithm|[SECTION 5.1.4, SECTION 5.1.5, SECTION 5.2.1, SECTION 5.2.3] Should fairness be calculated vs time?]]
-- [[#Fairness Within the Proposed Congestion Control Algorithm|[SECTION 5.2.1, SECTION 5.2.3] Max-Min and Minimum Potential Delay Fairness are not CCA fairness metrics but are throughput allocation fairness metrics. Can we report them to show whether a throughput allocation resulted from a CCA and thus by extension a CCA metric.]]
-- [[#Short Flows|[SECTION 5.1.5, SECTION 5.2.3] How long should a short flow last?]]
-- [[#Short Flows|[SECTION 5.1.5, SECTION 5.2.3] When should short flows start?]]
-- [[#Short and Long Flows|[SECTION 5.1.5, SECTION 5.2.3] How many short and long flows should we consider?]]
-- [[#Short and Long Flows|[SECTION 5.2.3] Should the CCA in each (short and long) flow be configurable? Or a pair(1 for short + 1 for long)]]
-- [[#Real-Time Congestion Control|[SECTION 5.2.2] How to go about testing Real-time congestion control? Apparently, RTCP is not implemented in the linux kernel yet.]]
-- \[SECTION 5.2.1, SECTION 5.2.3] What CCA should we run on QUIC?
+- [SECTION 5.1.4, SECTION 5.1.5, SECTION 5.2.1, SECTION 5.2.3 : Should fairness be measured across flows or devices? (if a device sends multiple flows)](#fairness-within-the-proposed-congestion-control-algorithm)
+- [SECTION 5.1.4, SECTION 5.1.3, SECTION 5.2.1, SECTION 5.2.3 What metrics should be used to measure fairness between flows with the same CCA and flows with different CCA?](#existing-general-purpose-cc-algorithms)
+  \[Jain’s Fairness, Product Measure, Epsilon Fairness, Max-Min Fairness, Minimum potential delay fairness, HARM fairness]
+- [SECTION 5.1.4, SECTION 5.1.5 What is a suitable value for epsilon in epsilon fairness?](#fairness-within-the-proposed-congestion-control-algorithm)
+- [SECTION 5.1.4, SECTION 5.1.5, SECTION 5.2.1, SECTION 5.2.3 Should fairness be calculated vs time?](#fairness-within-the-proposed-congestion-control-algorithm)
+- [SECTION 5.2.1, SECTION 5.2.3 Max-Min and Minimum Potential Delay Fairness are not CCA fairness metrics but are throughput allocation fairness metrics. Can we report them to show whether a throughput allocation resulted from a CCA and thus by extension a CCA metric.](#fairness-within-the-proposed-congestion-control-algorithm)
+- [SECTION 5.1.5, SECTION 5.2.3 How long should a short flow last?](#short-flows)
+- [SECTION 5.1.5, SECTION 5.2.3 When should short flows start?](#short-flows)
+- [SECTION 5.1.5, SECTION 5.2.3 How many short and long flows should we consider?](#short-and-long-flows)
+- [SECTION 5.2.3 Should the CCA in each (short and long) flow be configurable? Or a pair (1 for short + 1 for long)](#short-and-long-flows)
+- [SECTION 5.2.2 How to go about testing Real-time congestion control? Apparently, RTCP is not implemented in the Linux kernel yet.](#real-time-congestion-control)
+- [SECTION 5.2.1, SECTION 5.2.3] What CCA should we run on QUIC?
 
 ---
 
-- [SECTION 6.2] How should the CCA eval tool handle tunneling(VPN) and ECN working together?
+- [SECTION 6.2] How should the CCA eval tool handle tunneling (VPN) and ECN working together?
 
 ---
 
-1. [SECTION 7.2] Should this be a specific test ? Or we could see the value of packet drop ever goes above 10% ?
-2. [SECTION 7.3] Should we run the same tests but with varying delay or make a new testbed for this ?
-3. [SECTION 7.4] What metrics should we report for IoT environments (apart from CPU cycles and number of control packets)
-4. [SECTION 7.4] What topologies should we use for IoT environments?
-5. [SECTION 7.5] Should we consider different satellite environments? If not what should be the default value ?
-6. [SECTION 7.7] What is a suitable packet reordering probability? Should we run the tests for a range of probabilities (0.1 - 0.3) ?
-7. [SECTION 7.7] What is a suitable packet reordering distance? Should we run the tests for a range of probabilities (12 - 45) ?
-8. [SECTION 7.7] What is a suitable packet reordering delay?
-9. [SECTION 7.10] What topology should we use for MPTCP ?
-10. [SECTION 7.11] Do we run the same tests for Data Center networks or make a new testbed or do both ? What topology should we use for Data Centers ?
+- [SECTION 7.2] Should this be a specific test ? Or we could see the value of packet drop ever goes above 10% ?
+- [SECTION 7.3] Should we run the same tests but with varying delay or make a new testbed for this ?
+- [SECTION 7.4] What metrics should we report for IoT environments (apart from CPU cycles and number of control packets)
+- [SECTION 7.4] What topologies should we use for IoT environments?
+- [SECTION 7.5] Should we consider different satellite environments? If not what should be the default value ?
+- [SECTION 7.7] What is a suitable packet reordering probability? Should we run the tests for a range of probabilities (0.1 - 0.3) ?
+- [SECTION 7.7] What is a suitable packet reordering distance? Should we run the tests for a range of probabilities (12 - 45) ?
+- [SECTION 7.7] What is a suitable packet reordering delay?
+- [SECTION 7.10] What topology should we use for MPTCP ?
+- [SECTION 7.11] Do we run the same tests for Data Center networks or make a new testbed or do both ? What topology should we use for Data Centers ?
 
 # Test Configurations
 ## CC Algorithm
