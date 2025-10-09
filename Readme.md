@@ -2,7 +2,7 @@
 - \[SECTION 5.1] RFC 5166 SECTION 2.1 mentions different ways of calculating Throughput, Latency and Packet Drop Rate (Router-Based, Flow-Based, User-Based), which one is suitable for a CCA eval tool?
 - \[SECTION 5.1] RFC 5166 SECTION 2.2 mentions response time and minimum oscillations as a metric, what would be a suitable test to report these metrics on?
 - Should number of packets dropped in a time frame be reported? (Packet drop rate is already being measured)
-- [Should one end device send multiple flows? Or multiple devices send one flow each?](#short-flows)
+- Should one end device send multiple flows? Or multiple devices send one flow each? - [Short Flows](#short-flows)
 - Should fairness be measured across flows or devices? (if a device sends multiple flows) - [Fairness within the Proposed Congestion Control Algorithm](#fairness-within-the-proposed-congestion-control-algorithm)
 - What metrics should be used to measure fairness between flows with the same CCA and flows with different CCA? - [Existing General Purpose CC Algorithms](#existing-general-purpose-cc-algorithms)
   \[Jain’s Fairness, Product Measure, Epsilon Fairness, Max-Min Fairness, Minimum potential delay fairness, HARM fairness]
