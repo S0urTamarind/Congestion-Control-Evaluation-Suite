@@ -156,6 +156,15 @@ Some tests have multiple end devices on either side of the bottleneck. The defau
  - This metric is considered a model for TCP's behavior and acts as a compromise between max-min and proportional fairness.
  - An allocation meets this standard if it minimizes the sum of the inverse of each flow's throughput
  - This is equivalent to minimizing the average download time if all flows were transferring equal-sized files.
+
+## IoT Metrics
+### Number of control packets vs Time'
+ - Number of CPU cycles vs time.
+ - Queried from /proc/<PID>/stat
+
+### Number of CPU cycles utilized vs Time
+ - **Open to suggestions on how to implement this**
+ 
 # Test Cases
 
 ## Single Algorithm Behavior
