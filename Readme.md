@@ -84,7 +84,78 @@ Default is FQ_CoDel, but can be configured by the user.
 Some tests have multiple end devices on either side of the bottleneck. The default is 2, but can be configured by the user.
 
 # Metrics
+## Performance Metrics
+### cwnd vs Time 
+ - Congestion Window as a function of time.
 
+### Sending Rate vs Time
+ - Sending Rate as a function of time.
+ - Same as cwnd vs Time during low Congestion.
+
+### Throughput vs Time
+ - Router-based: Measured as the aggregate utilization of a link.
+ - Flow-based: Measured by the transfer times of individual connections.
+ - User-based: Measured by metrics like user wait times or application-specific utility functions
+
+### ssthresh vs Time
+ - slow start threshold as a function of time.
+
+### Latency vs Time
+ - Router-based: Focusing on Queueing delay over time.
+ - Flow-based: Per-packet transfer time.
+ - User-based: Total per-packet delay seen by an application including any time spent waiting at the sender and potential delays from retransmitting lost packets
+
+### Number of packet drops vs time
+ - Packet loss/Mark rate: raw rate of packets lost or marks by ECN.
+ - Congestion event rate: groups one or more lost/marked packets within a single roundtrip into a congestion event.
+ - Burst metrics for RTP:
+    - burst density: the fraction of packets in bursts
+    - gap density: the fraction of packets in the gaps between bursts
+    - burst duration: the mean duration of bursts in seconds
+    - gap duration: the mean duration of gaps in seconds
+
+### Flow completion Time vs Time
+ - The total duration from the moment the first packet of a data flow is sent to the moment the last packet is received
+
+### Qlength vs Time
+ - This measuers the number of packets waiting in a buffer (queue) at any given point in time, indicating the level of network congestion.
+
+### Qdelay v​​s Time
+ - This measures the time a packet spends waiting in a queue before being processed, illustrating the latency introduced by buffering over time.
+
+### QCapacity vs Time
+ - This shows the maximum size or packet-holding capacity of the queue over time.
+
+## Fairness Metrics
+### Jain's Fairness vs Time
+ - It measures the fairness of resource allocation among a number of users.
+ - The index ranges from 0 to 1, where 1 represents a perfectly fair allocation in which all users receive the same share.
+ - For n users, where x_i is the throughput for the i-th connection, the index is calculated.
+
+![](./assets/Jain's.png)
+
+
+### Product Measure vs Time 
+ - Product of individual connection throughputs to evaluate fairness.
+ - This measure is particularly sensitive to segregation, as the entire product becomes zero if any single connection receives zero throughput.
+
+### Epsilon Fairness
+ - It is Based on the worst-case ratio between flow rates
+ - A rate allocation is considered epsilon-fair if the ratio of the minimum throughput to the maximum throughput is at least 1−ϵ.
+
+### HARM Index 
+ - Measueres the negative impact a new Congestion Control Algorithm (CCA) has on the performance of existing, deployed CCAs.
+ - Harm is measured on a scale from 0 (harmless) to 1 (maximally harmful).
+ - Compare a flow's performance when running alone (solo performance, x) to its performance with a competitor (y).
+
+### Max-Min Fairness
+ - This criterion aims to make the smallest throughput rate as large as possible. After this is achieved, the next-smallest rate is made as large as possible, and so on.
+ - This approach gives "absolute priority to the smallest flows"
+
+### Minimum Potential Delay Fairness
+ - This metric is considered a model for TCP's behavior and acts as a compromise between max-min and proportional fairness.
+ - An allocation meets this standard if it minimizes the sum of the inverse of each flow's throughput
+ - This is equivalent to minimizing the average download time if all flows were transferring equal-sized files.
 # Test Cases
 
 ## Single Algorithm Behavior
