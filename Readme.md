@@ -65,14 +65,16 @@ The CC Algorithm to be tested. (Mandatory)
 ## Link Configurations
 Latency, Bandwidth, and Packet Drop rate depends on the environment such as: 
 
-| Environment            | Bandwidth | RTT     | Packet Drop Rate |
-| ---------------------- | --------- | ------- | ---------------- |
-| Wired Path             | 1 Gbps    | 1 ms    | 0 %              |
-| Wireless Path          | 1 Gbps    | 12 ms   | 0.0477 %         |
-| High Delay / Satellite |           | 500 ms  |                  |
-| Data Center            | 10 Gbps   | 0.25 ms | 0 %              |
-| IOT                    |           |         |                  |
+| Environment            | Bandwidth | RTT     | Packet Drop Rate | Packet Reordering Probability | Packet Reordering Distance |
+| ---------------------- | --------- | ------- | ---------------- | ----------------------------- | -------------------------- |
+| Wired Path             | 1 Gbps    | 1 ms    | 0 %              |                               |                            |
+| Wireless Path          | 1 Gbps    | 12 ms   | 0.0477 %         |                               |                            |
+| High Delay / Satellite |           | 500 ms  |                  |                               |                            |
+| Data Center            | 10 Gbps   | 0.25 ms | 0 %              |                               |                            |
+| IOT                    |           |         |                  |                               |                            |
+
 *The values mentioned above are per link.*
+
 These are preset values, and can be configured by the user if necessary.
 
 ## Queue Management Algorithms
