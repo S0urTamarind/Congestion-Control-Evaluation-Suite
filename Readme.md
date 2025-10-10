@@ -90,6 +90,7 @@ All the tests below will use only the new CC algorithm. Values such as delay and
 
 ### Protection against Congestion Collapse
 ![](./assets/CongestionCollapse.drawio.png)
+
 This test is to see whether the sender will backoff when experiencing high packet drop rates (above 30% according to RFC 3714). Initially, there won’t be any packet drop for a few seconds and then the packer drop is set to 30% in the bottleneck.
 
 Metrics (for sender): 
@@ -100,6 +101,7 @@ Metrics (for sender): 
     
 ### Protection against Bufferbloat
 ![](./assets/LowBandwidth.drawio.png)
+
 This test is to see if the new CC algorithm can solve the problem of Bufferbloat without the help of AQMs. A FIFO queue should be used everywhere. Low bandwidth of bottleneck will cause the queues to fill up.
 
 Metrics (for sender):
@@ -117,6 +119,7 @@ Metrics (for router) : 
 
 ### Protection against High Packet Loss
 ![](./assets/LowBandwidth.drawio.png)
+
 This test is to see if the new CC algorithm reduces its sending rate when facing High Packet Loss. Similar to the above test, the only difference is that AQMs can be used now. 
 
 Metrics (for sender) : 
@@ -134,6 +137,7 @@ Metrics (for router) : 
 
 ### Fairness Within the Proposed Congestion Control Algorithm
 ![](./assets/MultipleEndDevices.drawio.png)
+
 This test is to see if the new CC algorithm can be fair to each other. The number of end devices can be set.
 
 Metric (fairness): 
@@ -152,6 +156,7 @@ Metrics (for sender): 
     
 ### Short Flows
 ![](./assets/MultipleEndDevices.drawio.png)
+
 One primary sender will be a long flow, while the other will join later as a short flow (i.e. flows that terminate while in the “slow start” phase).
 
 Metric (fairness) - btw short and long flows: 
@@ -177,6 +182,7 @@ Metrics (for router) : 
 
 ### Existing General Purpose CC Algorithms
 ![](./assets/MultipleEndDevices.drawio.png)
+
 Similar to the “Fairness within Proposed CC Algorithm” test. The only difference is to use end devices with different CC algorithms (such as Reno, Cubic, BBR, etc) along with the new CC algorithm. 
 
 Metric (fairness):  
@@ -196,11 +202,13 @@ Metrics (for router): 
 - QCapacity vs Time 
     
 ### Real-Time Congestion Control
-![](./assets/MultipleEndDevices.drawio.png)  
+![](./assets/MultipleEndDevices.drawio.png) 
+
 Similar to the above test, but one of the sender runs a real-time congestion control algorithm.
 
 ### Short and Long Flows
 ![](./assets/MultipleEndDevices.drawio.png)
+
 Same as the “Short Flows” test, but this time the short and long flows should be the new CC algorithm and existing CC algorithms and vice versa.
 
 Metric (fairness): 
