@@ -308,3 +308,9 @@ Metrics (for router) : 
 - Qlength vs Time
 - Qdelay v​​s Time
 - QCapacity vs Time
+
+## Multipath Tests
+
+### Failover Multipath
+
+### Concurrent Multipath
