@@ -1,17 +1,16 @@
 # Questions
 
-- \[SECTION 5.1] RFC 5166 SECTION 2.1 mentions different ways of calculating Throughput, Latency and Packet Drop Rate (Router-Based, Flow-Based, User-Based), which one is suitable for a CCA eval tool?
+- [RFC 5166 SECTION 2.1] mentions different ways of calculating Throughput, Latency and Packet Drop Rate (Router-Based, Flow-Based, User-Based), which one is suitable for a CCA eval tool?
 
-- \[SECTION 5.1] RFC 5166 SECTION 2.2 mentions response time and minimum oscillations as a metric, what would be a suitable test to report these metrics on?
+- [RFC 5166 SECTION 2.2] mentions response time and minimum oscillations as a metric, what would be a suitable test to report these metrics on?
 
-- Should number of packets dropped in a time frame be reported? (Packet drop rate is already being measured)
+- Should number of packets dropped in a time frame be reported? (Packet drop rate is already being measured) - [Number of packet drops vs Time](#number-of-packet-drops-vs-time)
 
 - Should one end device send multiple flows? Or multiple devices send one flow each? - [Short Flows](#short-flows)
 
-- Should fairness be measured across flows or devices? (if a device sends multiple flows) - [Fairness within the Proposed Congestion Control Algorithm](#fairness-within-the-proposed-congestion-control-algorithm)
+- Should fairness be measured across flows or devices? (i.e. if a device sends multiple flows) - [Fairness within the Proposed Congestion Control Algorithm](#fairness-within-the-proposed-congestion-control-algorithm)
 
 - What metrics should be used to measure fairness between flows with the same CCA and flows with different CCA? - [Existing General Purpose CC Algorithms](#existing-general-purpose-cc-algorithms)
-  \[Jain’s Fairness, Product Measure, Epsilon Fairness, Max-Min Fairness, Minimum potential delay fairness, HARM fairness]
 
 - What is a suitable value for epsilon in epsilon fairness? - [Fairness within the Proposed Congestion Control Algorithm](#fairness-within-the-proposed-congestion-control-algorithm)
 
@@ -29,21 +28,17 @@
 
 - How to go about testing Real-time congestion control? Apparently, RTCP is not implemented in the Linux kernel yet. - [Real-Time-Congestion-Control](#real-time-congestion-control)
 
-- \[SECTION 5.2.1, SECTION 5.2.3] What CCA should we run on QUIC?
+- What CCA should we run on QUIC? - [Existing General Purpose CC Algorithms](#existing-general-purpose-cc-algorithms)
 
----
+- How should the CCA eval tool handle tunneling(VPN) and ECN working together?
 
-- \[SECTION 6.2] How should the CCA eval tool handle tunneling(VPN) and ECN working together?
+- Should network circuit breakers be a specific test? Or we could see the value of packet drop rate ever goes above 10%?
 
----
+- Should we run the same tests but with varying delay or make a new testbed for this? - [Link Configurations](#link-configurations)
 
-- \[SECTION 7.2] Should this be a specific test ? Or we could see the value of packet drop ever goes above 10% ?
+- What metrics should we report for IoT environments (apart from CPU cycles and number of control packets) - [IoT Metrics](#iot-metrics)
 
-- Should we run the same tests but with varying delay or make a new testbed for this ? - [Link Configurations](#link-configurations)
-
-- What metrics should we report for IoT environments (apart from CPU cycles and number of control packets) - [Link Configurations](#link-configurations)
-
-- \[SECTION 7.4] What topologies should we use for IoT environments?
+- What topologies should we use for IoT environments? Or should we just use the same tests?
 
 - Should we consider different satellite environments? If not what should be the default value ? - [Link Configurations](#link-configurations)
 
@@ -53,9 +48,7 @@
 
 - What is a suitable packet reordering delay? - [Link Configurations](#link-configurations)
 
-- \[SECTION 7.10] What topology should we use for MPTCP ?
-
-- \[SECTION 7.11] Do we run the same tests for Data Center networks or make a new testbed or do both ? What topology should we use for Data Centers ?
+- Do we run the same tests for Data Center networks or make a new testbed or do both? What topology should we use for Data Centers?
 
 # Test Configurations
 
@@ -84,7 +77,9 @@ Default is FQ_CoDel, but can be configured by the user.
 Some tests have multiple end devices on either side of the bottleneck. The default is 2, but can be configured by the user.
 
 # Metrics
+
 ## Performance Metrics
+
 ### cwnd vs Time 
  - Congestion Window as a function of time.
 
@@ -127,13 +122,13 @@ Some tests have multiple end devices on either side of the bottleneck. The defau
  - This shows the maximum size or packet-holding capacity of the queue over time.
 
 ## Fairness Metrics
+
 ### Jain's Fairness vs Time
+![](./assets/Jain's.png)
+
  - It measures the fairness of resource allocation among a number of users.
  - The index ranges from 0 to 1, where 1 represents a perfectly fair allocation in which all users receive the same share.
  - For n users, where x_i is the throughput for the i-th connection, the index is calculated.
-
-![](./assets/Jain's.png)
-
 
 ### Product Measure vs Time 
  - Product of individual connection throughputs to evaluate fairness.
@@ -158,22 +153,21 @@ Some tests have multiple end devices on either side of the bottleneck. The defau
  - This is equivalent to minimizing the average download time if all flows were transferring equal-sized files.
 
 ## IoT Metrics
-### Number of control packets vs Time'
- - Number of CPU cycles vs time.
- - Queried from /proc/<PID>/stat
 
-### Number of CPU cycles utilized vs Time
- - **Open to suggestions on how to implement this**
+### Number of control packets
+
+### Number of CPU cycles utilized
  
 # Test Cases
 
 ## Single Algorithm Behavior
-All the tests below will use only the new CC algorithm. Values such as delay and bandwidth, which qdisc to use, etc will depend on the environment (which is an input parameter).
 
 ### Protection against Congestion Collapse
 ![](./assets/CongestionCollapse.drawio.png)
 
 This test is to see whether the sender will backoff when experiencing high packet drop rates (above 30% according to RFC 3714). Initially, there won’t be any packet drop for a few seconds and then the packer drop is set to 30% in the bottleneck.
+
+*A congestion control algorithm should either stop sending when the packet drop rate exceeds some threshold [RFC3714] or include some notion of "full backoff".*
 
 Metrics (for sender): 
 - cwnd vs Time
@@ -185,6 +179,8 @@ Metrics (for sender): 
 ![](./assets/LowBandwidth.drawio.png)
 
 This test is to see if the new CC algorithm can solve the problem of Bufferbloat without the help of AQMs. A FIFO queue should be used everywhere. Low bandwidth of bottleneck will cause the queues to fill up.
+
+*A congestion control algorithm ought to try to avoid maintaining excessive queues in the network.*
 
 Metrics (for sender):
 - Latency vs Time
@@ -204,6 +200,8 @@ Metrics (for router) : 
 
 This test is to see if the new CC algorithm reduces its sending rate when facing High Packet Loss. Similar to the above test, the only difference is that AQMs can be used now. 
 
+*A congestion control algorithm needs to avoid causing excessively high rates of packet loss.*
+
 Metrics (for sender) : 
 - Latency vs Time
 - Throughput vs Time
@@ -221,6 +219,8 @@ Metrics (for router) : 
 ![](./assets/MultipleEndDevices.drawio.png)
 
 This test is to see if the new CC algorithm can be fair to each other. The number of end devices can be set.
+
+*When multiple competing flows all use the same proposed congestion control algorithm, the evaluation should explore how the capacity is shared among the competing flows.*
 
 Metric (fairness): 
 - Jain’s fairness
@@ -240,6 +240,8 @@ Metrics (for sender): 
 ![](./assets/MultipleEndDevices.drawio.png)
 
 One primary sender will be a long flow, while the other will join later as a short flow (i.e. flows that terminate while in the “slow start” phase).
+
+*A proposal for a congestion control algorithm MUST consider how new and short-lived flows affect long-lived flows, and vice versa.*
 
 Metric (fairness) - btw short and long flows: 
 - Jain’s fairness
@@ -267,6 +269,8 @@ Metrics (for router) : 
 
 Similar to the “Fairness within Proposed CC Algorithm” test. The only difference is to use end devices with different CC algorithms (such as Reno, Cubic, BBR, etc) along with the new CC algorithm. 
 
+*A proposed congestion control algorithm MUST be evaluated when competing against standard IETF congestion controls (e.g., [RFC5681], [RFC9002], and [RFC9438]).*
+
 Metric (fairness):  
 - [Harm index](https://www.irtf.org/anrp/IETF109-ANRP-Ware.pdf)
     
@@ -288,10 +292,14 @@ Metrics (for router): 
 
 Similar to the above test, but one of the sender runs a real-time congestion control algorithm.
 
+*A proposal for a congestion control algorithm SHOULD consider coexistence with widely deployed real-time congestion control algorithms.*
+
 ### Short and Long Flows
 ![](./assets/MultipleEndDevices.drawio.png)
 
 Same as the “Short Flows” test, but this time the short and long flows should be the new CC algorithm and existing CC algorithms and vice versa.
+
+*The effect on short-lived and long-lived flows using other common congestion control algorithms MUST be evaluated.*
 
 Metric (fairness): 
 - [Harm index](https://www.irtf.org/anrp/IETF109-ANRP-Ware.pdf) 
@@ -312,5 +320,19 @@ Metrics (for router) : 
 ## Multipath Tests
 
 ### Failover Multipath
+![](./assets/MultipathFailover.drawio.png)
+
+In this test, the multipath algorithm follows Failover mechanism, where it switches to another path when the working path fails. We remove the working router after some time and see how the algorithm responds.
+
+![](./assets/MultipathFailover2.drawio.png)
+
+This can be another version of the test where the multiple paths do not share a common bottleneck.
+
+*Authors of a proposed multipath congestion control algorithm that implements path failover MUST evaluate the harm to performance resulting from a change in the path and show that this does not result in flow starvation.*
 
 ### Concurrent Multipath
+![](./assets/MultipathConcurrent.drawio.png)
+
+In this test, we test if the new CC algorithm will be fair to another flow when it is sharing a bottleneck with a multipath flow.
+
+*A congestion control algorithm proposal MUST evaluate the potential harm to other flows when the multiple paths share a common congested bottleneck or share resources that are coupled between different paths, such as an overall capacity limit. A proposal SHOULD consider the potential for harm to other flows.*
