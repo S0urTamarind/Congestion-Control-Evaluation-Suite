@@ -44,7 +44,7 @@
 
 - What is a suitable packet reordering probability? Should we run the tests for a range of probabilities (0.1 - 0.3) ? - [Link Configurations](#link-configurations)
 
-- What is a suitable packet reordering distance? Should we run the tests for a range of probabilities (12 - 45) ? - [Link Configurations](#link-configurations)
+- What is a suitable packet reordering distance? Should we run the tests for a range of distances (12 - 45) ? - [Link Configurations](#link-configurations)
 
 - What is a suitable packet reordering delay? - [Link Configurations](#link-configurations)
 
