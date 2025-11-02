@@ -1,55 +1,3 @@
-# Questions
-
-- [RFC 5166 SECTION 2.1] mentions different ways of calculating Throughput, Latency and Packet Drop Rate (Router-Based, Flow-Based, User-Based), which one is suitable for a CCA eval tool?
-
-- [RFC 5166 SECTION 2.2] mentions response time and minimum oscillations as a metric, what would be a suitable test to report these metrics on?
-
-- Should number of packets dropped in a time frame be reported? (Packet drop rate is already being measured) - [Number of packet drops vs Time](#number-of-packet-drops-vs-time)
-
-- Should one end device send multiple flows? Or multiple devices send one flow each? - [Short Flows](#short-flows)
-
-- Should fairness be measured across flows or devices? (i.e. if a device sends multiple flows) - [Fairness within the Proposed Congestion Control Algorithm](#fairness-within-the-proposed-congestion-control-algorithm)
-
-- What metrics should be used to measure fairness between flows with the same CCA and flows with different CCA? - [Existing General Purpose CC Algorithms](#existing-general-purpose-cc-algorithms)
-
-- What is a suitable value for epsilon in epsilon fairness? - [Fairness within the Proposed Congestion Control Algorithm](#fairness-within-the-proposed-congestion-control-algorithm)
-
-- Should fairness be calculated vs time? - [Fairness within the Proposed Congestion Control Algorithm](#fairness-within-the-proposed-congestion-control-algorithm)
-
-- Max-Min and Minimum Potential Delay Fairness are not CCA fairness metrics but are throughput allocation fairness metrics. Can we report them to show whether a throughput allocation resulted from a CCA and thus by extension a CCA metric. - [Fairness within the Proposed Congestion Control Algorithm](#fairness-within-the-proposed-congestion-control-algorithm)
-
-- How long should a short flow last? - [Short Flows](#short-flows), [Short and Long Flows](short-and-long-flows)
-
-- When should short flows start? - [Short Flows](#short-flows), [Short and Long Flows](short-and-long-flows)
-
-- How many short and long flows should we consider? - [Short Flows](#short-flows), [Short and Long Flows](short-and-long-flows)
-
-- Should the CCA in each (short and long) flow be configurable? Or a pair (1 for short + 1 for long) - [Short Flows](#short-flows), [Short and Long Flows](short-and-long-flows)
-
-- How to go about testing Real-time congestion control? Apparently, RTCP is not implemented in the Linux kernel yet. - [Real-Time-Congestion-Control](#real-time-congestion-control)
-
-- What CCA should we run on QUIC? - [Existing General Purpose CC Algorithms](#existing-general-purpose-cc-algorithms)
-
-- How should the CCA eval tool handle tunneling(VPN) and ECN working together?
-
-- Should network circuit breakers be a specific test? Or we could see the value of packet drop rate ever goes above 10%?
-
-- Should we run the same tests but with varying delay or make a new testbed for this? - [Link Configurations](#link-configurations)
-
-- What metrics should we report for IoT environments (apart from CPU cycles and number of control packets) - [IoT Metrics](#iot-metrics)
-
-- What topologies should we use for IoT environments? Or should we just use the same tests?
-
-- Should we consider different satellite environments? If not what should be the default value ? - [Link Configurations](#link-configurations)
-
-- What is a suitable packet reordering probability? Should we run the tests for a range of probabilities (0.1 - 0.3) ? - [Link Configurations](#link-configurations)
-
-- What is a suitable packet reordering distance? Should we run the tests for a range of distances (12 - 45) ? - [Link Configurations](#link-configurations)
-
-- What is a suitable packet reordering delay? - [Link Configurations](#link-configurations)
-
-- Do we run the same tests for Data Center networks or make a new testbed or do both? What topology should we use for Data Centers?
-
 # Test Configurations
 
 ## CC Algorithm
@@ -336,3 +284,55 @@ This can be another version of the test where the multiple paths do not share a 
 In this test, we test if the new CC algorithm will be fair to another flow when it is sharing a bottleneck with a multipath flow.
 
 *A congestion control algorithm proposal MUST evaluate the potential harm to other flows when the multiple paths share a common congested bottleneck or share resources that are coupled between different paths, such as an overall capacity limit. A proposal SHOULD consider the potential for harm to other flows.*
+
+# Questions
+
+- [RFC 5166 SECTION 2.1] mentions different ways of calculating Throughput, Latency and Packet Drop Rate (Router-Based, Flow-Based, User-Based), which one is suitable for a CCA eval tool?
+
+- [RFC 5166 SECTION 2.2] mentions response time and minimum oscillations as a metric, what would be a suitable test to report these metrics on?
+
+- Should number of packets dropped in a time frame be reported? (Packet drop rate is already being measured) - [Number of packet drops vs Time](#number-of-packet-drops-vs-time)
+
+- Should one end device send multiple flows? Or multiple devices send one flow each? - [Short Flows](#short-flows)
+
+- Should fairness be measured across flows or devices? (i.e. if a device sends multiple flows) - [Fairness within the Proposed Congestion Control Algorithm](#fairness-within-the-proposed-congestion-control-algorithm)
+
+- What metrics should be used to measure fairness between flows with the same CCA and flows with different CCA? - [Existing General Purpose CC Algorithms](#existing-general-purpose-cc-algorithms)
+
+- What is a suitable value for epsilon in epsilon fairness? - [Fairness within the Proposed Congestion Control Algorithm](#fairness-within-the-proposed-congestion-control-algorithm)
+
+- Should fairness be calculated vs time? - [Fairness within the Proposed Congestion Control Algorithm](#fairness-within-the-proposed-congestion-control-algorithm)
+
+- Max-Min and Minimum Potential Delay Fairness are not CCA fairness metrics but are throughput allocation fairness metrics. Can we report them to show whether a throughput allocation resulted from a CCA and thus by extension a CCA metric. - [Fairness within the Proposed Congestion Control Algorithm](#fairness-within-the-proposed-congestion-control-algorithm)
+
+- How long should a short flow last? - [Short Flows](#short-flows), [Short and Long Flows](short-and-long-flows)
+
+- When should short flows start? - [Short Flows](#short-flows), [Short and Long Flows](short-and-long-flows)
+
+- How many short and long flows should we consider? - [Short Flows](#short-flows), [Short and Long Flows](short-and-long-flows)
+
+- Should the CCA in each (short and long) flow be configurable? Or a pair (1 for short + 1 for long) - [Short Flows](#short-flows), [Short and Long Flows](short-and-long-flows)
+
+- How to go about testing Real-time congestion control? Apparently, RTCP is not implemented in the Linux kernel yet. - [Real-Time-Congestion-Control](#real-time-congestion-control)
+
+- What CCA should we run on QUIC? - [Existing General Purpose CC Algorithms](#existing-general-purpose-cc-algorithms)
+
+- How should the CCA eval tool handle tunneling(VPN) and ECN working together?
+
+- Should network circuit breakers be a specific test? Or we could see the value of packet drop rate ever goes above 10%?
+
+- Should we run the same tests but with varying delay or make a new testbed for this? - [Link Configurations](#link-configurations)
+
+- What metrics should we report for IoT environments (apart from CPU cycles and number of control packets) - [IoT Metrics](#iot-metrics)
+
+- What topologies should we use for IoT environments? Or should we just use the same tests?
+
+- Should we consider different satellite environments? If not what should be the default value ? - [Link Configurations](#link-configurations)
+
+- What is a suitable packet reordering probability? Should we run the tests for a range of probabilities (0.1 - 0.3) ? - [Link Configurations](#link-configurations)
+
+- What is a suitable packet reordering distance? Should we run the tests for a range of distances (12 - 45) ? - [Link Configurations](#link-configurations)
+
+- What is a suitable packet reordering delay? - [Link Configurations](#link-configurations)
+
+- Do we run the same tests for Data Center networks or make a new testbed or do both? What topology should we use for Data Centers?
