@@ -1,30 +1,25 @@
-# Test Configurations
+# Congestion Control Evaluation Suite
+This is the design document for Congestion Control Evaluation Suite Extension for [NeST](https://gitlab.com/nitk-nest/nest).
 
-## CC Algorithm
-The CC Algorithm to be tested. (Mandatory)
+This is a benchmarking tool, which we hope will help people to benchmark new congestion control algorithms. This tool is compliant with [RFC 9743](https://datatracker.ietf.org/doc/rfc9743/).
 
-## Link Configurations
-Latency, Bandwidth, and Packet Drop rate depends on the environment such as: 
+The tool has a few standard tests, and running these tests will output some traces, graphs and statistics. We leave it to the user to interpret these results.
 
-| Environment            | Bandwidth | RTT     | Packet Drop Rate | Packet Reordering Probability | Packet Reordering Distance |
-| ---------------------- | --------- | ------- | ---------------- | ----------------------------- | -------------------------- |
-| Wired Path             | 1 Gbps    | 1 ms    | 0 %              |                               |                            |
-| Wireless Path          | 1 Gbps    | 12 ms   | 0.0477 %         |                               |                            |
-| High Delay / Satellite |           | 500 ms  |                  |                               |                            |
-| Data Center            | 10 Gbps   | 0.25 ms | 0 %              |                               |                            |
-| IOT                    |           |         |                  |                               |                            |
+Design goals
+ - The test outcomes must be statistically consistent.
+ - Have a way to load in custom implementations of CCAs and not just kernel modules.
 
-*The values mentioned above are per link.*
+The design involves three separate things:
+1. [Metrics](#metrics) 
+2. [Test Cases](#test-cases)
+3. [Test Configurations](#test-configurations)
 
-These are preset values, and can be configured by the user if necessary.
+At the end of this document you will find [questions](#questions) that we would like answers from the community. 
 
-## Queue Management Algorithms
-Default is FQ_CoDel, but can be configured by the user.
-
-## Number of End Devices
-Some tests have multiple end devices on either side of the bottleneck. The default is 2, but can be configured by the user.
+*Note: This document is just an initial draft and will keep evolving with community help and our own research. Any and all suggestions are welcome.*
 
 # Metrics
+<Add some stuff about metrics here>
 
 ## Performance Metrics
 
@@ -90,6 +85,7 @@ Some tests have multiple end devices on either side of the bottleneck. The defau
  - Measueres the negative impact a new Congestion Control Algorithm (CCA) has on the performance of existing, deployed CCAs.
  - Harm is measured on a scale from 0 (harmless) to 1 (maximally harmful).
  - Compare a flow's performance when running alone (solo performance, x) to its performance with a competitor (y).
+ - Reference: https://www.irtf.org/anrp/IETF109-ANRP-Ware.pdf
 
 ### Max-Min Fairness
  - This criterion aims to make the smallest throughput rate as large as possible. After this is achieved, the next-smallest rate is made as large as possible, and so on.
@@ -99,14 +95,11 @@ Some tests have multiple end devices on either side of the bottleneck. The defau
  - This metric is considered a model for TCP's behavior and acts as a compromise between max-min and proportional fairness.
  - An allocation meets this standard if it minimizes the sum of the inverse of each flow's throughput
  - This is equivalent to minimizing the average download time if all flows were transferring equal-sized files.
-
-## IoT Metrics
-
-### Number of control packets
-
-### Number of CPU cycles utilized
  
 # Test Cases
+These test cases are designed based on our understanding of RFC 9743. 
+
+The specific line from RFC 9743 that defines these testcases are quoted with them in *italic*.
 
 ## Single Algorithm Behavior
 
@@ -174,7 +167,7 @@ Metric (fairness): 
 - Jain’s fairness
 - Product measure
 - Epsilon fairness
-- [Harm index](https://www.irtf.org/anrp/IETF109-ANRP-Ware.pdf)
+- Harm index
     
 Metrics (for sender): 
 - Latency vs Time
@@ -285,54 +278,56 @@ In this test, we test if the new CC algorithm will be fair to another flow when 
 
 *A congestion control algorithm proposal MUST evaluate the potential harm to other flows when the multiple paths share a common congested bottleneck or share resources that are coupled between different paths, such as an overall capacity limit. A proposal SHOULD consider the potential for harm to other flows.*
 
+# Test Configurations
+
+## CC Algorithm
+The CC Algorithm to be tested. (Mandatory)
+
+## Link Configurations
+Each environment such as Wired, Wireless, Satellite, etc will have default presets for link configuration values such as Latency, Bandwidth, Packet Drop Rate, etc. 
+
+These are default values, and it is recommended that the user configures these themselves.
+
+| Environment            | Bandwidth | RTT     | Packet Drop Rate | Packet Reordering Probability | Packet Reordering Distance |
+| ---------------------- | --------- | ------- | ---------------- | ----------------------------- | -------------------------- |
+| Wired Path             | 1 Gbps    | 1 ms    | 0 %              |                               |                            |
+| Wireless Path          | 1 Gbps    | 12 ms   | 0.0477 %         |                               |                            |
+| High Delay / Satellite |           | 500 ms  |                  |                               |                            |
+| Data Center            | 10 Gbps   | 0.25 ms | 0 %              |                               |                            |
+| IOT                    |           |         |                  |                               |                            |
+
+*The values mentioned above are per link.*
+
+## Queue Management Algorithms
+Default is FQ_CoDel, but can be configured by the user.
+
+## Number of End Devices
+Some tests have multiple end devices on either side of the bottleneck. The default is 2, but can be configured by the user.
+
 # Questions
 
-- [RFC 5166 SECTION 2.1] mentions different ways of calculating Throughput, Latency and Packet Drop Rate (Router-Based, Flow-Based, User-Based), which one is suitable for a CCA eval tool?
-
-- [RFC 5166 SECTION 2.2] mentions response time and minimum oscillations as a metric, what would be a suitable test to report these metrics on?
-
-- Should number of packets dropped in a time frame be reported? (Packet drop rate is already being measured) - [Number of packet drops vs Time](#number-of-packet-drops-vs-time)
-
-- Should one end device send multiple flows? Or multiple devices send one flow each? - [Short Flows](#short-flows)
-
-- Should fairness be measured across flows or devices? (i.e. if a device sends multiple flows) - [Fairness within the Proposed Congestion Control Algorithm](#fairness-within-the-proposed-congestion-control-algorithm)
-
-- What metrics should be used to measure fairness between flows with the same CCA and flows with different CCA? - [Existing General Purpose CC Algorithms](#existing-general-purpose-cc-algorithms)
-
-- What is a suitable value for epsilon in epsilon fairness? - [Fairness within the Proposed Congestion Control Algorithm](#fairness-within-the-proposed-congestion-control-algorithm)
-
-- Should fairness be calculated vs time? - [Fairness within the Proposed Congestion Control Algorithm](#fairness-within-the-proposed-congestion-control-algorithm)
-
-- Max-Min and Minimum Potential Delay Fairness are not CCA fairness metrics but are throughput allocation fairness metrics. Can we report them to show whether a throughput allocation resulted from a CCA and thus by extension a CCA metric. - [Fairness within the Proposed Congestion Control Algorithm](#fairness-within-the-proposed-congestion-control-algorithm)
-
-- How long should a short flow last? - [Short Flows](#short-flows), [Short and Long Flows](short-and-long-flows)
-
-- When should short flows start? - [Short Flows](#short-flows), [Short and Long Flows](short-and-long-flows)
-
-- How many short and long flows should we consider? - [Short Flows](#short-flows), [Short and Long Flows](short-and-long-flows)
-
-- Should the CCA in each (short and long) flow be configurable? Or a pair (1 for short + 1 for long) - [Short Flows](#short-flows), [Short and Long Flows](short-and-long-flows)
+## Questions specific to the design documents
+- What is a suitable value for epsilon in epsilon fairness? - [Epsilon Fairness](#epsilon-fairness)
 
 - How to go about testing Real-time congestion control? Apparently, RTCP is not implemented in the Linux kernel yet. - [Real-Time-Congestion-Control](#real-time-congestion-control)
 
 - What CCA should we run on QUIC? - [Existing General Purpose CC Algorithms](#existing-general-purpose-cc-algorithms)
 
-- How should the CCA eval tool handle tunneling(VPN) and ECN working together?
+- What should be the default link configuration values we use for different environments and is there any other default environment that we should add? - [Link Configurations](#link-configurations)
 
-- Should network circuit breakers be a specific test? Or we could see the value of packet drop rate ever goes above 10%?
+## General Questions
 
-- Should we run the same tests but with varying delay or make a new testbed for this? - [Link Configurations](#link-configurations)
+- Regarding varying delay:
+    1. Create a new testcase to test how the CCA performs with varying delay. 
+    2. Create a new default link configuration which will cause varying delay.
+    3. All link configurations should cause varying delay.
 
-- What metrics should we report for IoT environments (apart from CPU cycles and number of control packets) - [IoT Metrics](#iot-metrics)
+- Any suggestions regarding testing for CCA made for IOT.
 
-- What topologies should we use for IoT environments? Or should we just use the same tests?
+- Any suggestions for tests for paths with VPN tunneling.
 
-- Should we consider different satellite environments? If not what should be the default value ? - [Link Configurations](#link-configurations)
+- Any suggestions for metrics that we have not mentioned that should be added to the suite or to any specific test case.
 
-- What is a suitable packet reordering probability? Should we run the tests for a range of probabilities (0.1 - 0.3) ? - [Link Configurations](#link-configurations)
+- RFC 9743 mentions network circuit breakers. Should this be a standalone test? Or we could just measure if packet drop rate ever goes above 10%.
 
-- What is a suitable packet reordering distance? Should we run the tests for a range of distances (12 - 45) ? - [Link Configurations](#link-configurations)
-
-- What is a suitable packet reordering delay? - [Link Configurations](#link-configurations)
-
-- Do we run the same tests for Data Center networks or make a new testbed or do both? What topology should we use for Data Centers?
+- In some of the tests there are multiple devices that act as senders. Should there be a version of those tests in which 1 device sends multiple flows instead?
