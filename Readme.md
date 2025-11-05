@@ -1,11 +1,11 @@
 # Congestion Control Evaluation Suite
 This is the design document for Congestion Control Evaluation Suite Extension for [NeST](https://gitlab.com/nitk-nest/nest).
 
-This is a benchmarking tool, which we hope will help people to benchmark new congestion control algorithms. This tool is compliant with [RFC 9743](https://datatracker.ietf.org/doc/rfc9743/).
+This is a benchmarking tool, which we hope will help people to benchmark new congestion control algorithms.
 
-The tool has a few standard tests, and running these tests will output some traces, graphs and statistics. We leave it to the user to interpret these results.
+The tool would have a few standard tests, compliant with [RFC 9743](https://datatracker.ietf.org/doc/rfc9743/), and running these tests will output some traces, graphs and statistics. We leave it to the user to interpret these results.
 
-Design goals
+Design goals (looking for comments and suggestions) 
  - The test outcomes must be statistically consistent.
  - Have a way to load in custom implementations of CCAs and not just kernel modules.
 
@@ -14,12 +14,12 @@ The design involves three separate things:
 2. [Test Cases](#test-cases)
 3. [Test Configurations](#test-configurations)
 
-At the end of this document you will find [questions](#questions) that we would like answers from the community. 
+At the end of this document you will find [questions](#questions) that we would like answers to, from the community. 
 
-*Note: This document is just an initial draft and will keep evolving with community help and our own research. Any and all suggestions are welcome.*
+*Note: This document is just an initial draft and will keep evolving with help from the community and our own research. Any and all suggestions are welcome and greatly appreciated.*
 
 # Metrics
-<Add some stuff about metrics here>
+These are the metrics that we have planned to include in the suite, and are heavily influenced by those outlines in [RFC 5166](https://datatracker.ietf.org/doc/rfc5166/)
 
 ## Performance Metrics
 
