@@ -19,7 +19,7 @@ At the end of this document you will find [questions](#questions) that we would 
 *Note: This document is just an initial draft and will keep evolving with help from the community and our own research. Any and all suggestions are welcome and greatly appreciated.*
 
 # Metrics
-These are the metrics that we have planned to include in the suite, and are heavily influenced by those outlines in [RFC 5166](https://datatracker.ietf.org/doc/rfc5166/)
+These are the metrics that we have planned to include in the suite, and are heavily influenced by those outlined in [RFC 5166](https://datatracker.ietf.org/doc/rfc5166/)
 
 ## Performance Metrics
 
